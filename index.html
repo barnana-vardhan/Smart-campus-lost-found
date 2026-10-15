@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Campus Lost & Found</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header class="navbar">
+        <div class="nav-container">
+            <h1><i class="fa-solid fa-graduation-cap"></i> Smart Campus Lost & Found</h1>
+            <div class="nav-actions">
+                <button id="open-report-modal" class="btn btn-primary"><i class="fa-solid fa-plus"></i> Report Item</button>
+                <button id="load-demo-btn" class="btn btn-outline" title="Load Demo Data"><i class="fa-solid fa-cloud-arrow-down"></i> Load Demo</button>
+                <button id="reset-demo-btn" class="btn btn-outline" title="Reset/Clear Demo Data"><i class="fa-solid fa-rotate-right"></i> Reset Demo</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-container">
+        <!-- Stats / Hero Section -->
+        <section class="hero-section">
+            <div class="hero-content">
+                <h2>Find What You Lost, Return What You Found</h2>
+                <p>Welcome to the official campus hub for lost and found belongings. Browse active reports, run smart matching, or submit a new report.</p>
+            </div>
+            <div class="stats-cards">
+                <div class="stat-card">
+                    <i class="fa-solid fa-box-archive text-blue"></i>
+                    <div>
+                        <h3 id="stat-total">0</h3>
+                        <p>Total Reports</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <i class="fa-solid fa-triangle-exclamation text-orange"></i>
+                    <div>
+                        <h3 id="stat-lost">0</h3>
+                        <p>Lost Items</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <i class="fa-solid fa-hands-holding-child text-green"></i>
+                    <div>
+                        <h3 id="stat-found">0</h3>
+                        <p>Found Items</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <i class="fa-solid fa-circle-check text-purple"></i>
+                    <div>
+                        <h3 id="stat-recovered">0</h3>
+                        <p>Recovered</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Controls Section: Search & Filters -->
+        <section class="controls-section">
+            <div class="search-box">
+                <i class="fa-solid fa-search"></i>
+                <input type="text" id="search-input" placeholder="Search by item name, description, location...">
+            </div>
+            <div class="filter-group">
+                <select id="filter-type">
+                    <option value="ALL">All Types</option>
+                    <option value="LOST">Lost</option>
+                    <option value="FOUND">Found</option>
+                </select>
+                <select id="filter-category">
+                    <option value="ALL">All Categories</option>
+                    <option value="Electronics">Electronics</option>
+                    <option value="Keys">Keys</option>
+                    <option value="ID / Cards">ID / Cards</option>
+                    <option value="Clothing & Accessories">Clothing & Accessories</option>
+                    <option value="Books & Stationery">Books & Stationery</option>
+                    <option value="Bags & Wallets">Bags & Wallets</option>
+                    <option value="Other">Other</option>
+                </select>
+                <select id="filter-status">
+                    <option value="ALL">All Status</option>
+                    <option value="active">Active</option>
+                    <option value="recovered">Recovered</option>
+                </select>
+            </div>
+        </section>
+
+        <!-- Reports Grid -->
+        <section class="reports-section">
+            <div class="section-header">
+                <h3>Item Reports</h3>
+                <span id="results-count">Showing 0 items</span>
+            </div>
+            <div id="reports-grid" class="reports-grid">
+                <!-- Cards will be dynamically inserted here -->
+            </div>
+            <div id="empty-state" class="empty-state hidden">
+                <i class="fa-solid fa-folder-open"></i>
+                <h4>No items found</h4>
+                <p>Try adjusting your search or filter criteria, or load demo data.</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal for Reporting Item -->
+    <div id="report-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Report Lost or Found Item</h3>
+                <button id="close-modal" class="close-btn">&times;</button>
+            </div>
+            <form id="report-form">
+                <div class="form-group">
+                    <label>Report Type *</label>
+                    <div class="radio-group">
+                        <label class="radio-label lost-radio">
+                            <input type="radio" name="reportType" value="LOST" required> Lost Item
+                        </label>
+                        <label class="radio-label found-radio">
+                            <input type="radio" name="reportType" value="FOUND" required> Found Item
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="itemName">Item Name *</label>
+                        <input type="text" id="itemName" name="itemName" required placeholder="e.g., MacBook Pro, Blue Backpack">
+                    </div>
+                    <div class="form-group">
+                        <label for="category">Category *</label>
+                        <select id="category" name="category" required>
+                            <option value="">Select Category</option>
+                            <option value="Electronics">Electronics</option>
+                            <option value="Keys">Keys</option>
+                            <option value="ID / Cards">ID / Cards</option>
+                            <option value="Clothing & Accessories">Clothing & Accessories</option>
+                            <option value="Books & Stationery">Books & Stationery</option>
+                            <option value="Bags & Wallets">Bags & Wallets</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="color">Color *</label>
+                        <input type="text" id="color" name="color" required placeholder="e.g., Black, Silver, Navy Blue">
+                    </div>
+                    <div class="form-group">
+                        <label for="date">Date *</label>
+                        <input type="date" id="date" name="date" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="location">Location *</label>
+                    <input type="text" id="location" name="location" required placeholder="e.g., Science Library 2nd Floor, Student Union Cafeteria">
+                </div>
+
+                <div class="form-group">
+                    <label for="imageUrl">Image URL (Optional)</label>
+                    <input type="url" id="imageUrl" name="imageUrl" placeholder="e.g., https://images.unsplash.com/photo-...">
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Description *</label>
+                    <textarea id="description" name="description" rows="3" required placeholder="Provide distinguishing marks, brand, serial number prefix, or specific condition..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="contactInfo">Contact Info / Email *</label>
+                    <input type="text" id="contactInfo" name="contactInfo" required placeholder="e.g., student@campus.edu or 555-0192">
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" id="cancel-modal" class="btn btn-outline">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Submit Report</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal for Smart Match Finder -->
+    <div id="match-modal" class="modal">
+        <div class="modal-content match-modal-content">
+            <div class="modal-header">
+                <h3 id="match-modal-title"><i class="fa-solid fa-wand-magic-sparkles"></i> Smart Match Results</h3>
+                <button id="close-match-modal" class="close-btn">&times;</button>
+            </div>
+            <div id="match-modal-body" class="match-modal-body">
+                <!-- Potential matches rendered here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Smart Campus Lost & Found. Built for campus community assistance.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
